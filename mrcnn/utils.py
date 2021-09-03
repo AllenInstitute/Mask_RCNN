@@ -359,7 +359,23 @@ class Dataset(object):
         image = skimage.io.imread(self.image_info[image_id]['path'])
         # If grayscale. Convert to RGB for consistency.
         if image.ndim != 3:
-            image = skimage.color.gray2rgb(image)
+#             image = skimage.color.gray2rgb(image)
+        
+#######
+# Added this part as an extra to feed 3 images
+            
+            main_path = self.image_info[image_id]['path']
+#             pre_path = main_path[:-19] + 'pre_image/'
+            pre_path = '/'.join(main_path.split('/')[:-2]) + '/pre_image/'
+            pre_image_name = os.listdir(pre_path)[0]
+            pre_path = pre_path + pre_image_name
+            pre_image = skimage.io.imread(pre_path)
+#             post_path = main_path[:-19] + 'post_image/'
+            post_path = '/'.join(main_path.split('/')[:-2]) + '/post_image/'
+            post_path = post_path + os.listdir(post_path)[0]
+            post_image = skimage.io.imread(post_path)
+            image = np.stack([pre_image, image, post_image], axis=-1)
+    
         # If has an alpha channel, remove it for consistency
         if image.shape[-1] == 4:
             image = image[..., :3]
