@@ -99,10 +99,10 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     """
     # Number of instances
     N = boxes.shape[0]
-    if not N:
-        print("\n*** No instances to display *** \n")
-    else:
-        assert boxes.shape[0] == masks.shape[-1] == class_ids.shape[0]
+#     if not N:
+#         print("\n*** No instances to display *** \n")
+#     else:
+#         assert boxes.shape[0] == masks.shape[-1] == class_ids.shape[0]
 
     # If no axis is passed, create one and automatically call show()
     auto_show = False
@@ -113,7 +113,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
     # Generate random colors
     colors = colors or random_colors(N)
 
-    # Show area outside image boundaries.
+    # Show area outside image boundaries.x
     height, width = image.shape[:2]
     ax.set_ylim(height + 10, -10)
     ax.set_xlim(-10, width + 10)
